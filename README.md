@@ -13,18 +13,6 @@
 
 ---
 
-## Spring-boot
-
-### Spec
-
-- Gradle
-- Java 11
-- Spring Boot 2.4.2
-
-### Dependencies
-- Spring Web
-- Thymeleaf
-- DynamoDB
 
 ## 🚀구현목록
 
