@@ -8,6 +8,12 @@ group = 'S-STT'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -16,7 +22,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.11.942'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.testcontainers:junit-jupiter:1.15.1'
