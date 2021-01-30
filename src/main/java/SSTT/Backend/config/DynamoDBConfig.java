@@ -1,5 +1,6 @@
 package SSTT.Backend.config;
 
+/* DynamoDB 사용X
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
@@ -24,3 +25,4 @@ public class DynamoDBConfig {
                 .build();
     }
 }
+*/
