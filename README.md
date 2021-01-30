@@ -23,6 +23,7 @@
 
 ### Dependencies
 - Spring Web
+- Spring Data JPA
 - Thymeleaf
 - Lombok
 - MySQL
