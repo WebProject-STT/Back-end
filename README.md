@@ -13,8 +13,21 @@
 
 ---
 
+## 🧱 Spring-boot
 
-## 🚀구현목록
+### Spec
+
+- Gradle
+- Java 11
+- Spring Boot 2.4.2
+
+### Dependencies
+- Spring Web
+- Thymeleaf
+- Lombok
+- MySQL
+
+## 🚀 구현목록
 
 ### 기본 로그인 기능
 
