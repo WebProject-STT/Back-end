@@ -1,6 +1,6 @@
 package SSTT.Backend.dbtest;
 
-
+/*
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,3 +18,5 @@ public class Member {
     private String username;
 
 }
+
+ */

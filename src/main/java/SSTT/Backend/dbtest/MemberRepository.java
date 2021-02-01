@@ -1,5 +1,5 @@
 package SSTT.Backend.dbtest;
-
+/*
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -20,3 +20,5 @@ public class MemberRepository {
         return em.find(Member.class, id);
     }
 }
+
+ */
