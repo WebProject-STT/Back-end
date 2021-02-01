@@ -1,5 +1,5 @@
 package SSTT.Backend.dynamodb;
-
+/*
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.*;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
@@ -148,3 +148,4 @@ public class SpringBootDynamoApplicationTests2 {
         dynamoDB.deleteTable("test");
     }
 }
+ */

@@ -1,5 +1,5 @@
 package SSTT.Backend.dynamodb;
-
+/*
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -27,3 +27,4 @@ public abstract class AbstractIntegrationTest {
 
 
 }
+*/
