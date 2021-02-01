@@ -5,7 +5,7 @@
   
   <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/languages/java.svg" alt="java" />
   <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/framework/spring.svg" alt="spring" />
-  <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/service/amazondynamodb.svg" alt="amazon Dynamo DB">
+  <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/languages/mysql.svg" alt="mysql">
   <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/service/amazonaws.svg" alt="amazon AWS" />
   <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/tool/intellijidea.svg" alt="intelliJ" />
   
@@ -27,6 +27,9 @@
 - Thymeleaf
 - Lombok
 - MySQL
+
+## DB 설계
+👉 [ERD 보러가기](https://www.erdcloud.com/p/moELiWYaGA4usWeYm)
 
 ## 🚀 구현목록
 
