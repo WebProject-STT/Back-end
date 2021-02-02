@@ -37,4 +37,24 @@ public class Contents {
     @OneToMany(mappedBy = "contents")
     private List<Summary> summaryList = new ArrayList<>(); // 요약 리스트
 
+    // 연관관계 편의 메소드
+    public void setUser(User user){
+        this.user = user;
+        user.getContentsList().add(this);
+    }
+
+    public void setCategory(Category category){
+        this.category = category;
+        user.getContentsList().add(this);
+    }
+
+    public void addTag(Tag tag){
+        tagList.add(tag);
+        tag.setContents(this);
+    }
+
+    public void addSummary(Summary summary){
+        summaryList.add(summary);
+        summary.setContents(this);
+    }
 }
