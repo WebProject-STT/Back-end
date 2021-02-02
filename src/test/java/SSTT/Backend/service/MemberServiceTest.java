@@ -1,7 +1,7 @@
 package SSTT.Backend.service;
 
-import SSTT.Backend.domain.User;
-import SSTT.Backend.repository.UserRepository;
+import SSTT.Backend.domain.Member;
+import SSTT.Backend.repository.MemberRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +15,25 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class UserServiceTest {
+public class MemberServiceTest {
 
-    @Autowired UserService userService;
-    @Autowired UserRepository userRepository;
+    @Autowired
+    MemberService memberService;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     @Rollback(value = false) // false로 지정하면 db에 commit 된 결과 확인 가능
     public void 회원가입() throws Exception {
         // given
-        User user = new User();
-        user.setSignId("sb2504");
+        Member member = new Member();
+        member.setSignId("sb2504");
 
         // when
-        Long savedId = userService.join(user);
+        Long savedId = memberService.join(member);
 
         // then
-        assertEquals(user, userRepository.findOne(savedId)); // 같은 아이디인지 확인을 통해 저장되었음을 확인한다.
+        assertEquals(member, memberRepository.findOne(savedId)); // 같은 아이디인지 확인을 통해 저장되었음을 확인한다.
 
     }
 
@@ -39,15 +41,15 @@ public class UserServiceTest {
     public void 중복회원예외() throws Exception {
 
         // given
-        User user1 = new User();
-        user1.setSignId("2504sb");
+        Member member1 = new Member();
+        member1.setSignId("2504sb");
 
-        User user2 = new User();
-        user2.setSignId("2504sb");
+        Member member2 = new Member();
+        member2.setSignId("2504sb");
 
         // when
-        userService.join(user1);
-        userService.join(user2); // 에러가 발생해야 함
+        memberService.join(member1);
+        memberService.join(member2); // 에러가 발생해야 함
 
         // then
         fail("에러가 발생해야 한다."); // 여기로 오면 안됨! 에러를 못잡은 것! ㅠ

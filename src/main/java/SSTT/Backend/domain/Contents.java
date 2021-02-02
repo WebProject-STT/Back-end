@@ -17,8 +17,8 @@ public class Contents {
     private long id; // 게시글 번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user; // 회원 번호
+    @JoinColumn(name = "member_id")
+    private Member member; // 회원 번호
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cg_id")
@@ -46,14 +46,14 @@ public class Contents {
     private List<Summary> summaryList = new ArrayList<>(); // 요약 리스트
 
     // 연관관계 편의 메소드
-    public void setUser(User user){
-        this.user = user;
-        user.getContentsList().add(this);
+    public void setMember(Member member){
+        this.member = member;
+        member.getContentsList().add(this);
     }
 
     public void setCategory(Category category){
         this.category = category;
-        user.getContentsList().add(this);
+        member.getContentsList().add(this);
     }
 
     public void addTag(Tag tag){
