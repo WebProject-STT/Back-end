@@ -10,12 +10,16 @@ import javax.persistence.*;
 public class Summary {
 
     @Id @GeneratedValue
-    private Long sum_idx; // 요약글 번호
+    @Column(name = "sum_id")
+    private Long id; // 요약글 번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ct_idx")
+    @JoinColumn(name = "ct_id")
     private Contents contents; // 게시글 번호
 
-    private String sum_title; // 요약글 제목
-    private String sum_desc; // 요약글 설명
+    @Column(name = "sum_title")
+    private String title; // 요약글 제목
+
+    @Column(name = "sum_desc")
+    private String desc; // 요약글 설명
 }

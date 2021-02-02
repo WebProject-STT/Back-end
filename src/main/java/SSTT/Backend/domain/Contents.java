@@ -13,23 +13,31 @@ import java.util.List;
 public class Contents {
 
     @Id @GeneratedValue
-    private long ct_idx; // 게시글 번호
+    @Column(name = "ct_id")
+    private long id; // 게시글 번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_idx")
+    @JoinColumn(name = "user_id")
     private User user; // 회원 번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cg_idx")
+    @JoinColumn(name = "cg_id")
     private Category category; // 카테고리 번호
 
-    private String ct_title; // 게시글 제목
-    private String ct_desc; // 게시글 설명
-    private LocalDateTime ct_date; // 게시글 생성일
-    private String ct_origin; // 게시글 원본
+    @Column(name = "ct_title")
+    private String title; // 게시글 제목
+
+    @Column(name = "ct_desc")
+    private String desc; // 게시글 설명
+
+    @Column(name = "ct_date")
+    private LocalDateTime date; // 게시글 생성일
+
+    @Column(name = "ct_origin")
+    private String origin; // 게시글 원본
 
     @Embedded
-    private File ct_file; // 게시글 파일 (수정 필요)
+    private File file; // 게시글 파일 (수정 필요)
 
     @OneToMany(mappedBy = "contents")
     private List<Tag> tagList = new ArrayList<>(); // 태그 리스트

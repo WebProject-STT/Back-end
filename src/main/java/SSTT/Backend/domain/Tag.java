@@ -10,11 +10,13 @@ import javax.persistence.*;
 public class Tag {
 
     @Id @GeneratedValue
-    private Long tag_idx; // 태그 번호
+    @Column(name = "tag_id")
+    private Long id; // 태그 번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ct_idx")
+    @JoinColumn(name = "ct_id")
     private Contents contents; // 게시글 번호
 
-    private String tag_name; // 태그명
+    @Column(name = "tag_name")
+    private String name; // 태그명
 }

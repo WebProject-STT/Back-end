@@ -13,13 +13,23 @@ import java.util.List;
 public class User {
 
     @Id @GeneratedValue
-    private Long user_idx; // 회원 번호
+    @Column(name = "user_id")
+    private Long id; // 회원 번호
 
-    private String user_id; // 회원 아이디
-    private String user_name; // 회원 이름
-    private String user_email; // 회원 이메일
-    private String user_pwd; // 회원 비밀번호
-    private LocalDateTime user_signup_dt; // 회원 가입일
+    @Column(name = "user_sign_id")
+    private String signId; // 회원 로그인 아이디
+
+    @Column(name = "user_name")
+    private String name; // 회원 이름
+
+    @Column(name = "user_email")
+    private String email; // 회원 이메일
+
+    @Column(name = "user_pwd")
+    private String pwd; // 회원 비밀번호
+
+    @Column(name = "user_signup_dt")
+    private LocalDateTime signupDt; // 회원 가입일
 
     @OneToMany(mappedBy = "user")
     private List<Contents> contentsList = new ArrayList<>(); // 게시글 리스트
