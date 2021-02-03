@@ -24,6 +24,7 @@
 ### Dependencies
 - Spring Web
 - Spring Data JPA
+- Spring Security
 - Thymeleaf
 - Lombok
 - MySQL
@@ -75,3 +76,7 @@
 3. 삭제 버튼 클릭 시 게시글 전시 여부를 N으로 수정한다.
 4. 파일재업로드 버튼을 통해 전달된 파일로 DB를 Update한다.
 5. 정보가 수정된 경우, 해당 페이지로 DB 정보를 재전송한다.
+
+---
+
+@Copyright [김수빈](https://github.com/Kim-SuBin)
