@@ -1,8 +1,7 @@
 package SSTT.Backend.config;
 
 import SSTT.Backend.service.MemberService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,38 +11,49 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@RequiredArgsConstructor
-@EnableWebSecurity // Spring Security 활성화 어노테이션
-@Configuration
+@Configuration // config bean이라는 것을 명시
+@EnableWebSecurity // spring security config를 할 클래스임을 명시
+@AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
-    private final MemberService memberService;
-    
+
+    private MemberService memberService;
+
     @Bean
-    public PasswordEncoder passwordEncoder() { // 비밀번호 암호화 인코더
+    public PasswordEncoder passwordEncoder() {
+        // 비밀번호 암호화
         return new BCryptPasswordEncoder();
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic()
-                .and()
-                .authorizeRequests()
-                .anyRequest().permitAll() // 누구나 접근 허용
-                .and()
-                    .formLogin()
-                        .loginPage("/login") // 로그인 페이지
-                        .defaultSuccessUrl("/") // 로그인 후 리다이렉트할 주소
-                .and()
-                    .logout()
-                        .logoutSuccessUrl("/login") // 로그아웃 성공 후 리다이렉트할 주소
-                        .invalidateHttpSession(true); // 로그아웃 후 세션 전체 삭제
+    public void configure(WebSecurity web) throws Exception {
+        // 인증을 무시하기 위한 설정 (static)
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
     }
 
-    // 로그인 할 때 필요한 정보를 가져옴
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
+        // http로 들어오는 요청에 대한 보안 구성
+        http.authorizeRequests()
+                .antMatchers("/**").permitAll()
+                .and()
+                .formLogin()//로그인 설정
+                .loginPage("/login")// 커스텀 로그인 페이지 사용
+                .defaultSuccessUrl("/") // 로그인 성공 시 이동할 페이지
+                .permitAll()
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true) // 세션 초기화
+                .and()
+                .exceptionHandling();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 로그인 처리를 하기 위한 설정
         auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
     }
 }
