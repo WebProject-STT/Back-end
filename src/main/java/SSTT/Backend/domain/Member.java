@@ -1,7 +1,6 @@
 package SSTT.Backend.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,7 +9,8 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-public class Member {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Member{
 
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -33,4 +33,17 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Contents> contentsList = new ArrayList<>(); // 게시글 리스트
+
+
+    @Builder
+    public Member(Long id, String signId, String name, String email, String pwd, LocalDateTime signupDt, List<Contents> contentsList) {
+        this.id = id;
+        this.signId = signId;
+        this.name = name;
+        this.email = email;
+        this.pwd = pwd;
+        this.signupDt = signupDt;
+        this.contentsList = contentsList;
+    }
+
 }
