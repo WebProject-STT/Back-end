@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <title>HomePage</title>
+  <title>Home</title>
 </head>
 <body>
-<h1>HomePage</h1>
-<a href="/login"><button>Log In</button></a>
-<a href="/signup"><button>Sign Up</button></a>
+<h1>Home</h1>
+<!--
+Spring Security가 제공해주는 인증 정보 태그
+isAuthenticated() 로그인이 이루어진 상태
+isAnonymous() 로그인이 이루어지지 않은 상태
+-->
+<h3 sec:authorize="isAuthenticated()">반갑습니다. <span sec:authentication="name"></span>님!</h3>
+<hr>
+<a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
+<a sec:authorize="isAnonymous()" th:href="@{/signup}">회원가입</a>
 </body>
 </html>
