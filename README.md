@@ -5,7 +5,7 @@
   
   <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/languages/java.svg" alt="java" />
   <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/framework/spring.svg" alt="spring" />
-  <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/languages/mysql.svg" alt="mysql">
+  <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/system/mysql.svg" alt="mysql">
   <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/service/amazonaws.svg" alt="amazon AWS" />
   <img src="https://github.com/Kim-SuBin/Kim-SuBin/blob/master/svg/dev/tool/intellijidea.svg" alt="intelliJ" />
   
