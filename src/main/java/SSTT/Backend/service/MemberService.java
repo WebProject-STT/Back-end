@@ -29,12 +29,19 @@ public class MemberService implements UserDetailsService{
 
     // 회원가입
     @Transactional
-    public Long signUp(MemberDto memberDto){
+    public Long signUp(MemberDto memberDto) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPwd(passwordEncoder.encode(memberDto.getPwd()));
         memberDto.setSignupDt(LocalDateTime.now());
 
         return memberRepository.save(memberDto.toEntity()).getId();
+    }
+
+    public void idCheck(String signId) {
+        Optional<Member> findMembers = memberRepository.findBySignId(signId);
+        if (!findMembers.isEmpty()) {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        }
     }
 
     @Override
@@ -58,8 +65,6 @@ public class MemberService implements UserDetailsService{
     
 //    // 회원 가입
 //    public Long join(Member member){
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        member.setPwd(encoder.encode(member.getPassword())); // password 암호화
 //
 //        validateDuplicateUser(member); // 중복 회원 검증
 //

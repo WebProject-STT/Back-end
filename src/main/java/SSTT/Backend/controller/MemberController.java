@@ -27,6 +27,7 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String signup(MemberDto memberDto) {
+        memberService.idCheck(memberDto.getSignId()); // ID 중복 확인
         memberService.signUp(memberDto);
 
         return "home";
