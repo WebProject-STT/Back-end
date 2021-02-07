@@ -16,5 +16,6 @@ isAnonymous() 로그인이 이루어지지 않은 상태
 <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
 <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
 <a sec:authorize="isAnonymous()" th:href="@{/signup}">회원가입</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/upload}">게시글 등록</a>
 </body>
 </html>
