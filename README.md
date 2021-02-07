@@ -32,6 +32,9 @@
 ## DB 설계
 👉 [ERD 보러가기](https://www.erdcloud.com/p/moELiWYaGA4usWeYm)
 
+## Swagger
+👉 [Swagger 보러가기](https://app.swaggerhub.com/apis/Kim-SuBin/S-STT/1.0.0)
+
 ## 🚀 구현목록
 
 ### 기본 로그인 기능
