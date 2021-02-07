@@ -1,7 +1,9 @@
 package SSTT.Backend.domain;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Contents {
 
     @Id @GeneratedValue
@@ -20,9 +23,9 @@ public class Contents {
     @JoinColumn(name = "member_id")
     private Member member; // 회원 번호
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cg_id")
-    private Category category; // 카테고리 번호
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "cg_id")
+//    private Category category; // 카테고리명
 
     @Column(name = "ct_title")
     private String title; // 게시글 제목
@@ -33,11 +36,11 @@ public class Contents {
     @Column(name = "ct_date")
     private LocalDateTime date; // 게시글 생성일
 
-    @Column(name = "ct_origin")
+    @Column(name = "ct_origin", columnDefinition = "TEXT")
     private String origin; // 게시글 원본
 
-    @Embedded
-    private File file; // 게시글 파일 (수정 필요)
+    @Column(name = "ct_file", columnDefinition = "TEXT")
+    private String filepath; // 게시글 파일 url
 
     @OneToMany(mappedBy = "contents")
     private List<Tag> tagList = new ArrayList<>(); // 태그 리스트
@@ -51,10 +54,10 @@ public class Contents {
         member.getContentsList().add(this);
     }
 
-    public void setCategory(Category category){
-        this.category = category;
-        member.getContentsList().add(this);
-    }
+//    public void setCategory(Category category){
+//        this.category = category;
+//        member.getContentsList().add(this);
+//    }
 
     public void addTag(Tag tag){
         tagList.add(tag);
@@ -65,4 +68,31 @@ public class Contents {
         summaryList.add(summary);
         summary.setContents(this);
     }
+
+    @Builder
+    public Contents(Long id, Member member, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
+        this.id = id;
+        this.member = member;
+        this.title = title;
+        this.desc = desc;
+        this.date = date;
+        this.filepath = filepath;
+        this.origin = origin;
+        this.tagList = tagList;
+        this.summaryList = summaryList;
+    }
+
+//    @Builder
+//    public Contents(Long id, Member member, Category category, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
+//        this.id = id;
+//        this.member = member;
+//        this.category = category;
+//        this.title = title;
+//        this.desc = desc;
+//        this.date = date;
+//        this.filepath = filepath;
+//        this.origin = origin;
+//        this.tagList = tagList;
+//        this.summaryList = summaryList;
+//    }
 }
