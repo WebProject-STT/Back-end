@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload</title>
+</head>
+<body>
+<h1>File Upload</h1>
+<!-- 파일 업로드는 multipart/form-data로 전송 -->
+<form action="/upload" th:object="${contents}" method="post" enctype="multipart/form-data">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+  제목 : <input type="text" th:field="*{title}"> <br>
+<!--  주제 : <input type="text" th:field="*{category.title}"> <br>-->
+  파일 : <input type="file" name="file"> <br>
+  설명 : <input type="text" th:field="*{desc}"> <br>
+  <button>등록하기</button>
+</form>
+</body>
+</html>
