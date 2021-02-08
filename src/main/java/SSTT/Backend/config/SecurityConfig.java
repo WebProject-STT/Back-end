@@ -48,9 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true) // 세션 초기화
                 .and()
-                .exceptionHandling();
-//                .and()
-//                .csrf().disable(); // 프론트에 토큰값을 보내기 위해 csrf 보안 설정 비활성화
+                .exceptionHandling()
+                .and()
+                .csrf().disable(); // 프론트에 토큰값을 보내기 위해 csrf 보안 설정 비활성화 (spring template에서 csrf 사용불가)
     }
 
     @Override
