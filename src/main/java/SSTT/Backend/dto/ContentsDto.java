@@ -15,7 +15,7 @@ public class ContentsDto {
 
     private long id; // 게시글 번호
     private Member member; // 회원 번호
-    //private Category category; // 카테고리 번호
+    private Category category; // 카테고리 번호
     private String title; // 게시글 제목
     private String desc; // 게시글 설명
     private LocalDateTime date; // 게시글 생성일
@@ -41,9 +41,10 @@ public class ContentsDto {
     }
 
     @Builder
-    public ContentsDto(Long id, Member member, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
+    public ContentsDto(Long id, Member member, Category category, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
         this.id = id;
         this.member = member;
+        this.category = category;
         this.title = title;
         this.desc = desc;
         this.date = date;
@@ -52,18 +53,4 @@ public class ContentsDto {
         this.tagList = tagList;
         this.summaryList = summaryList;
     }
-
-//    @Builder
-//    public ContentsDto(Long id, Member member, Category category, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
-//        this.id = id;
-//        this.member = member;
-//        this.category = category;
-//        this.title = title;
-//        this.desc = desc;
-//        this.date = date;
-//        this.filepath = filepath;
-//        this.origin = origin;
-//        this.tagList = tagList;
-//        this.summaryList = summaryList;
-//    }
 }

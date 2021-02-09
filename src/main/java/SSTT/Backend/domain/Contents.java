@@ -23,9 +23,9 @@ public class Contents {
     @JoinColumn(name = "member_id")
     private Member member; // 회원 번호
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "cg_id")
-//    private Category category; // 카테고리명
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cg_id")
+    private Category category; // 카테고리명
 
     @Column(name = "ct_title")
     private String title; // 게시글 제목
@@ -54,10 +54,10 @@ public class Contents {
         member.getContentsList().add(this);
     }
 
-//    public void setCategory(Category category){
-//        this.category = category;
-//        member.getContentsList().add(this);
-//    }
+    public void setCategory(Category category){
+        this.category = category;
+        member.getContentsList().add(this);
+    }
 
     public void addTag(Tag tag){
         tagList.add(tag);
@@ -70,9 +70,10 @@ public class Contents {
     }
 
     @Builder
-    public Contents(Long id, Member member, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
+    public Contents(Long id, Member member, Category category, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
         this.id = id;
         this.member = member;
+        this.category = category;
         this.title = title;
         this.desc = desc;
         this.date = date;
@@ -81,18 +82,4 @@ public class Contents {
         this.tagList = tagList;
         this.summaryList = summaryList;
     }
-
-//    @Builder
-//    public Contents(Long id, Member member, Category category, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
-//        this.id = id;
-//        this.member = member;
-//        this.category = category;
-//        this.title = title;
-//        this.desc = desc;
-//        this.date = date;
-//        this.filepath = filepath;
-//        this.origin = origin;
-//        this.tagList = tagList;
-//        this.summaryList = summaryList;
-//    }
 }
