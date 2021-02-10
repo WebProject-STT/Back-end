@@ -1,7 +1,5 @@
 package SSTT.Backend.service;
 
-import SSTT.Backend.domain.Contents;
-import SSTT.Backend.dto.ContentsDto;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

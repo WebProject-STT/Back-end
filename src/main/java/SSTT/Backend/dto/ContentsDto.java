@@ -29,7 +29,7 @@ public class ContentsDto {
         return Contents.builder()
                 .id(id)
                 .member(member)
-                //.category(category)
+                .category(category)
                 .title(title)
                 .desc(desc)
                 .date(date)

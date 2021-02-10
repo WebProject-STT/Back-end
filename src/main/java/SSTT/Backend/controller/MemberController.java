@@ -7,7 +7,6 @@ import SSTT.Backend.dto.MemberSignUpDto;
 import SSTT.Backend.repository.MemberRepository;
 import SSTT.Backend.service.MemberService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;

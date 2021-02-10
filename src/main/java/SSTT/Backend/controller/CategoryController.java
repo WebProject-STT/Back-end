@@ -1,8 +1,6 @@
 package SSTT.Backend.controller;
 
-import SSTT.Backend.domain.Category;
 import SSTT.Backend.dto.CategoryDto;
-import SSTT.Backend.repository.CategoryRepository;
 import SSTT.Backend.service.CategoryService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
