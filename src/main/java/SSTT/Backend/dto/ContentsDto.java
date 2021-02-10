@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ContentsDto {
 
-    private long id; // 게시글 번호
+    private Long id; // 게시글 번호
     private Member member; // 회원 번호
     private Category category; // 카테고리 번호
     private String title; // 게시글 제목
