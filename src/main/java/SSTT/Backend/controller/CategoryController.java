@@ -1,5 +1,6 @@
 package SSTT.Backend.controller;
 
+import SSTT.Backend.domain.Category;
 import SSTT.Backend.dto.CategoryDto;
 import SSTT.Backend.service.CategoryService;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +34,7 @@ public class CategoryController {
 
     @ApiOperation(value = "카테고리 목록 조회", notes = "카테고리 리스트 전달")
     @GetMapping("/category")
-    public List<CategoryDto> findAll(Model model) {
+    public List<Category> findAll(Model model) {
         return categoryService.findAll();
     }
 

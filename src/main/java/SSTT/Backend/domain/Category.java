@@ -3,8 +3,6 @@ package SSTT.Backend.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -23,8 +21,8 @@ public class Category {
     @Column(name = "cg_title")
     private String title; // 카테고리명
 
-    @OneToMany(mappedBy = "category")
-    private List<Contents> contentsList = new ArrayList<>(); // 게시글 리스트
+//    @OneToMany(mappedBy = "category")
+//    private List<Contents> contentsList = new ArrayList<>(); // 게시글 리스트
 
     // 연관관계 편의 메소드
 //    public void setMember(Member member) {
@@ -33,9 +31,9 @@ public class Category {
 //    }
 
     @Builder
-    public Category(Long id, String title, List<Contents> contentsList) {
+    public Category(Long id, String title) {
         this.id = id;
         this.title = title;
-        this.contentsList = contentsList;
+        //this.contentsList = contentsList;
     }
 }
