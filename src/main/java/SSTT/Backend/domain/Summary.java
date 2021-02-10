@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Summary {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sum_id")
     private Long id; // 요약글 번호
 
@@ -20,6 +20,6 @@ public class Summary {
     @Column(name = "sum_title")
     private String title; // 요약글 제목
 
-    @Column(name = "sum_desc")
+    @Column(name = "sum_desc", columnDefinition = "TEXT")
     private String desc; // 요약글 설명
 }

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Tag {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
     private Long id; // 태그 번호
 

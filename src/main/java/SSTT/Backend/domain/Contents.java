@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Contents {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ct_id")
     private long id; // 게시글 번호
 
