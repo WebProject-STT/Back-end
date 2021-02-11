@@ -45,7 +45,7 @@ public class MemberController {
                         .build()).getId();
     }
 
-    @ApiOperation(value = "로그인", notes = "토큰 반환. 아이디 또는 패스워드 오류 시 false (string) 반환")
+    @ApiOperation(value = "로그인", notes = "회원 번호 + ' ' + 토큰 반환. 아이디 또는 패스워드 오류 시 false (string) 반환")
     @PostMapping("/user/login")
     public String login(@RequestBody @Valid MemberLoginDto user) {
         Member member;
@@ -58,6 +58,6 @@ public class MemberController {
             return "false";
         }
 
-        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+        return  member.getId() + " " + jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 }
