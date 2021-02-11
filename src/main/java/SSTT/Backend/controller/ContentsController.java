@@ -1,45 +1,44 @@
 package SSTT.Backend.controller;
 
+import SSTT.Backend.component.S3Uploader;
+import SSTT.Backend.domain.Category;
+import SSTT.Backend.domain.Contents;
+import SSTT.Backend.domain.Member;
 import SSTT.Backend.dto.ContentsDto;
-import SSTT.Backend.service.ContentsService;
-import SSTT.Backend.service.S3Service;
+import SSTT.Backend.repository.ContentsRepository;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.time.LocalDateTime;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ContentsController {
-    private S3Service s3Service;
-    private ContentsService contentsService;
 
-    @ApiOperation(value = "게시글 등록")
+    private final S3Uploader uploader;
+    private final ContentsRepository contentsRepository;
+
+    @ApiImplicitParam(name = "X-AUTH-TOKEN")
+    @ApiOperation(value = "게시글 등록", notes = "form-data 형태로 전달해야하며, category 및 member의 경우 id(pk)로 전달해야 함")
     @PostMapping("/contents")
-    public String upload(ContentsDto contentsDto, MultipartFile file) throws IOException {
-        String path = s3Service.upload(file);
-        contentsDto.setFilepath(path);
-        contentsService.savePost(contentsDto);
-
-        return "home";
+    public Long upload(@RequestParam("file") MultipartFile file,
+                       @RequestParam("title") String title,
+                       @RequestParam("category") Category category,
+                       @RequestParam("desc") String desc,
+                       @RequestParam("member") Member member) throws Exception {
+        String path = uploader.upload(file, "static");
+        return contentsRepository.save(
+                Contents.builder()
+                        .title(title)
+                        .filepath(path)
+                        .date(LocalDateTime.now())
+                        .category(category)
+                        .desc(desc)
+                        .member(member)
+                        .build()).getId();
     }
-
-//    @GetMapping("/contents")
-//    public String upload(Model model) {
-//        model.addAttribute("contents", new ContentsDto());
-//        return "upload";
-//    }
-//
-//    @ApiOperation(value = "게시글 등록")
-//    @PostMapping("/contents")
-//    public String upload(ContentsDto contentsDto, MultipartFile file) throws IOException {
-//        String path = s3Service.upload(file);
-//        contentsDto.setFilepath(path);
-//        contentsService.savePost(contentsDto);
-//
-//        return "home";
-//    }
+    
 }
