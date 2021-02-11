@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,19 +47,26 @@ public class MemberController {
                         .build()).getId();
     }
 
-    @ApiOperation(value = "로그인", notes = "회원 번호 + ' ' + 토큰 반환. 아이디 또는 패스워드 오류 시 false (string) 반환")
+    @ApiOperation(value = "로그인", notes = "회원 번호 + ' ' + 토큰 반환. 아이디 또는 패스워드 오류 시 { data : error} 반환")
     @PostMapping("/user/login")
-    public String login(@RequestBody @Valid MemberLoginDto user) {
+    public Map<String, String> login(@RequestBody @Valid MemberLoginDto user) {
         Member member;
+        Map<String, String> list = new HashMap<>();
         try {
             member = memberService.findSignId(user.getSignId());
             if (!passwordEncoder.matches(user.getPwd(), member.getPassword())) {
                 throw new IllegalArgumentException("잘못된 비밀번호입니다.");
             }
         } catch (IllegalArgumentException e) {
-            return "false";
+            list.put("data", "error");
+            return list;
         }
 
-        return  member.getId() + " " + jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+
+        list.put("member_id", String.valueOf(member.getId()));
+        list.put("token", jwtTokenProvider.createToken(member.getUsername(), member.getRoles()));
+
+        // member.getId() + " " + jwtTokenProvider.createToken(member.getUsername(), member.getRoles())
+        return  list;
     }
 }
