@@ -1,9 +1,6 @@
 package SSTT.Backend.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +10,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Contents {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,19 +66,5 @@ public class Contents {
     public void addSummary(Summary summary){
         summaryList.add(summary);
         summary.setContents(this);
-    }
-
-    @Builder
-    public Contents(Long id, Member member, Category category, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
-        this.id = id;
-        this.member = member;
-        this.category = category;
-        this.title = title;
-        this.desc = desc;
-        this.date = date;
-        this.filepath = filepath;
-        this.origin = origin;
-        this.tagList = tagList;
-        this.summaryList = summaryList;
     }
 }

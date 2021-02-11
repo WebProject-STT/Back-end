@@ -2,10 +2,7 @@ package SSTT.Backend.dto;
 
 import SSTT.Backend.domain.Contents;
 import SSTT.Backend.domain.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MemberDto {
 
     private Long id;
@@ -35,17 +34,6 @@ public class MemberDto {
                 .signupDt(signupDt)
                 .contentsList(contentsList)
                 .build();
-    }
-
-    @Builder
-    public MemberDto(Long id, String signId, String name, String email, String pwd, LocalDateTime signupDt, List<Contents> contentsList) {
-        this.id = id;
-        this.signId = signId;
-        this.name = name;
-        this.email = email;
-        this.pwd = pwd;
-        this.signupDt = signupDt;
-        this.contentsList = contentsList;
     }
 
 }

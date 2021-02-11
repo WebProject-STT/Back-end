@@ -1,14 +1,13 @@
 package SSTT.Backend.dto;
 
 import SSTT.Backend.domain.Category;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CategoryDto {
 
     private Long id; // 카테고리 번호
@@ -21,11 +20,5 @@ public class CategoryDto {
                 .id(id)
                 .title(title)
                 .build();
-    }
-
-    @Builder
-    public CategoryDto(Long id, String title) {
-        this.id = id;
-        this.title = title;
     }
 }

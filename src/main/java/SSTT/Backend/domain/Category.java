@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Category {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +32,4 @@ public class Category {
 //        member.getCategoryList().add(this);
 //    }
 
-    @Builder
-    public Category(Long id, String title) {
-        this.id = id;
-        this.title = title;
-        //this.contentsList = contentsList;
-    }
 }

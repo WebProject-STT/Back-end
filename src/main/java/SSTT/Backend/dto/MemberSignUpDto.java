@@ -1,15 +1,14 @@
 package SSTT.Backend.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MemberSignUpDto {
 
     private Long id;
@@ -19,13 +18,4 @@ public class MemberSignUpDto {
     private String pwd; // 회원 비밀번호
     private LocalDateTime signupDt; // 회원 가입일
 
-    @Builder
-    public MemberSignUpDto(Long id, String signId, String name, String email, String pwd, LocalDateTime signupDt) {
-        this.id = id;
-        this.signId = signId;
-        this.name = name;
-        this.email = email;
-        this.pwd = pwd;
-        this.signupDt = signupDt;
-    }
 }

@@ -11,6 +11,8 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ContentsDto {
 
     private Long id; // 게시글 번호
@@ -38,19 +40,5 @@ public class ContentsDto {
                 .tagList(tagList)
                 .summaryList(summaryList)
                 .build();
-    }
-
-    @Builder
-    public ContentsDto(Long id, Member member, Category category, String title, String desc, LocalDateTime date, String filepath, String origin, List<Tag> tagList, List<Summary> summaryList) {
-        this.id = id;
-        this.member = member;
-        this.category = category;
-        this.title = title;
-        this.desc = desc;
-        this.date = date;
-        this.filepath = filepath;
-        this.origin = origin;
-        this.tagList = tagList;
-        this.summaryList = summaryList;
     }
 }
