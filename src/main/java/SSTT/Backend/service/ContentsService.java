@@ -10,10 +10,5 @@ import java.time.LocalDateTime;
 @Service
 @AllArgsConstructor
 public class ContentsService {
-    private ContentsRepository contentsRepository;
 
-    public void savePost(ContentsDto contentsDto) {
-        contentsDto.setDate(LocalDateTime.now());
-        contentsRepository.save(contentsDto.toEntity());
-    }
 }
