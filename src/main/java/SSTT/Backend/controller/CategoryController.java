@@ -5,6 +5,8 @@ import SSTT.Backend.dto.CategoryDto;
 import SSTT.Backend.service.CategoryService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +27,9 @@ public class CategoryController {
 
     @ApiOperation(value = "카테고리 삭제", notes = "카테고리 삭제 성공 시 true 반환")
     @DeleteMapping("/category/{categoryId}")
-    public Boolean delete(@PathVariable("categoryId") Long id) {
-        return categoryService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable("categoryId") Long id) {
+        categoryService.delete(id);
+        return new ResponseEntity<>("category delete", HttpStatus.OK);
     }
 
     @ApiOperation(value = "카테고리 목록 조회", notes = "카테고리 리스트 전달")
