@@ -12,11 +12,14 @@ import SSTT.Backend.service.MemberService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,14 +42,7 @@ public class ContentsController {
         String path = uploader.upload(file, "static");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
-        System.out.println("===========name==============");
-        System.out.println(name);
-        System.out.println("===============================");
         Member member = memberService.findSignId(name);
-        System.out.println("============member=============");
-        System.out.println(member);
-        System.out.println(member.getId());
-        System.out.println("===============================");
         return contentsRepository.save(
                 Contents.builder()
                         .title(title)
@@ -58,19 +54,15 @@ public class ContentsController {
                         .build()).getId();
     }
 
+    
+
     @ApiImplicitParam(name = "X-AUTH-TOKEN")
     @ApiOperation(value = "게시글 목록 전체 조회", notes = "게시글 목록 전체 전달")
     @GetMapping("/contents")
     public List<ContentsListMapping> findAll() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
-        System.out.println("===========find-name==============");
-        System.out.println(name);
-        System.out.println("===============================");
         Member member = memberService.findSignId(name);
-        System.out.println("============find-member=============");
-        System.out.println(member.getId());
-        System.out.println("===============================");
         return contentsService.findAll(member);
     }
 
@@ -80,13 +72,7 @@ public class ContentsController {
     public List<ContentsListMapping> findCategory(@PathVariable("categoryId") Long categoryId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
-        System.out.println("===========find-name(category)==============");
-        System.out.println(name);
-        System.out.println("===============================");
         Member member = memberService.findSignId(name);
-        System.out.println("============find-member(category)=============");
-        System.out.println(member.getId());
-        System.out.println("===============================");
         return contentsService.findCategory(member, categoryId);
     }
 
@@ -96,16 +82,32 @@ public class ContentsController {
     public List<ContentsMapping> findContents(@PathVariable("contentsId") Long contentsId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
-        System.out.println("===========find-name(contents)==============");
-        System.out.println(name);
-        System.out.println("===============================");
         Member member = memberService.findSignId(name);
-        System.out.println("============find-member(contents)=============");
-        System.out.println(member.getId());
-        System.out.println("===============================");
         return contentsService.findContents(member, contentsId);
     }
 
+    @ApiImplicitParam(name = "X-AUTH-TOKEN")
+    @ApiOperation(value = "게시글 삭제", notes = "특정 게시글 삭제")
+    @DeleteMapping("/contents/{contentsId}")
+    public ResponseEntity<?> delete(@PathVariable("contentsId") Long contentsId) {
+        contentsService.delete(contentsId);
+        return new ResponseEntity<>("contents delete", HttpStatus.OK);
+    }
 
+    @ApiImplicitParam(name = "X-AUTH-TOKEN")
+    @ApiOperation(value = "여러 게시글 삭제", notes = "선택한 여러 게시글 삭제")
+    @DeleteMapping("/contents")
+    public ResponseEntity<?> deleteContents(@RequestParam("deleteList") List<Long> ids) {
+        contentsService.deleteContents(ids);
+        return new ResponseEntity<>("contents list delete", HttpStatus.OK);
+    }
+
+    /*
+    @ApiOperation(value = "카테고리 삭제", notes = "카테고리 삭제 성공 시 true 반환")
+    @DeleteMapping("/category/{categoryId}")
+    public Boolean delete(@PathVariable("categoryId") Long id) {
+        return categoryService.delete(id);
+    }
+     */
     
 }

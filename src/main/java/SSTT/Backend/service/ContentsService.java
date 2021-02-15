@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,18 +20,12 @@ public class ContentsService {
 
     @Transactional
     public List<ContentsListMapping> findAll(Member member) {
-        System.out.println("============find-member=============");
-        System.out.println("find All");
-        System.out.println("====================================");
         List<ContentsListMapping> findContents = contentsRepository.findAllByMemberId(member.getId());
         return findContents;
     }
 
     @Transactional
     public List<ContentsListMapping> findCategory(Member member, Long categoryId) {
-        System.out.println("============find-member=============");
-        System.out.println("find Category");
-        System.out.println("====================================");
         return contentsRepository.findAllByMemberIdAndCategoryId(member.getId(), categoryId);
     }
 
@@ -39,4 +34,13 @@ public class ContentsService {
         return contentsRepository.findByIdAndAndMemberId(contentsId, member.getId());
     }
 
+    @Transactional
+    public void delete(Long contentsId) {
+        contentsRepository.deleteById(contentsId);
+    }
+
+    public Boolean deleteContents(List<Long> ids) {
+        for (Long id : ids) contentsRepository.deleteById(id);
+        return true;
+    }
 }
