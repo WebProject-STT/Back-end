@@ -35,6 +35,7 @@ public class Member implements UserDetails {
     @Column(name = "member_email", nullable = false)
     private String email; // 회원 이메일
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Json 결과로 출력하지 않을 데이터 표시
     @Column(name = "member_pwd", nullable = false)
     private String pwd; // 회원 비밀번호
 
@@ -44,8 +45,8 @@ public class Member implements UserDetails {
 //    @OneToMany(mappedBy = "member")
 //    private List<Category> categoryList = new ArrayList<>(); // 카테고리 리스트
 
-    @OneToMany(mappedBy = "member")
-    private List<Contents> contentsList = new ArrayList<>(); // 게시글 리스트
+//    @OneToMany(mappedBy = "member")
+//    private List<Contents> contentsList = new ArrayList<>(); // 게시글 리스트
 
 
     // Role List

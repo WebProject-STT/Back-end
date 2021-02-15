@@ -21,7 +21,7 @@ public class MemberDto {
     private String email; // 회원 이메일
     private String pwd; // 회원 비밀번호
     private LocalDateTime signupDt; // 회원 가입일
-    private List<Contents> contentsList = new ArrayList<>(); // 게시글 리스트
+//    private List<Contents> contentsList = new ArrayList<>(); // 게시글 리스트
 
     // Member 객체로 변환
     public Member toEntity() {
@@ -32,7 +32,6 @@ public class MemberDto {
                 .email(email)
                 .pwd(pwd)
                 .signupDt(signupDt)
-                .contentsList(contentsList)
                 .build();
     }
 
