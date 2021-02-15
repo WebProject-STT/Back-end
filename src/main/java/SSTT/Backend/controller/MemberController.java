@@ -6,6 +6,7 @@ import SSTT.Backend.dto.MemberLoginDto;
 import SSTT.Backend.dto.MemberSignUpDto;
 import SSTT.Backend.repository.MemberRepository;
 import SSTT.Backend.service.MemberService;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -47,7 +47,7 @@ public class MemberController {
                         .build()).getId();
     }
 
-    @ApiOperation(value = "로그인", notes = "회원 번호 + ' ' + 토큰 반환. 아이디 또는 패스워드 오류 시 false (string) 반환")
+    @ApiOperation(value = "로그인", notes = "토큰 반환. 아이디 또는 패스워드 오류 시 false (string) 반환")
     @PostMapping("/user/login")
     public String login(@RequestBody @Valid MemberLoginDto user) {
         Member member;
@@ -59,8 +59,14 @@ public class MemberController {
         } catch (IllegalArgumentException e) {
             return "false";
         }
-
-
         return  jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
+
+    @ApiImplicitParam(name = "X-AUTH-TOKEN")
+    @GetMapping("/user/logout")
+    public String logout() {
+        // 토큰 제거 기능 추가해야 함
+        return "true";
+    }
+
 }
