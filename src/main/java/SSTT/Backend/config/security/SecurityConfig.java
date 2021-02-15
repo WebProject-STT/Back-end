@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity // spring security config를 할 클래스임을 명시
 @RequiredArgsConstructor
@@ -36,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable() // REAT API 이므로 기본 설정 해제
                 .csrf().disable() // csrf 보안 토큰 사용 X
+                .formLogin().disable() // 폼 기반 인증 비활성화
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 X
                 .and()
                 .authorizeRequests() // 요청에 대한 사용 권한 체크
