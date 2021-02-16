@@ -39,8 +39,7 @@ public class ContentsService {
         contentsRepository.deleteById(contentsId);
     }
 
-    public Boolean deleteContents(List<Long> ids) {
+    public void deleteContents(List<Long> ids) {
         for (Long id : ids) contentsRepository.deleteById(id);
-        return true;
     }
 }
