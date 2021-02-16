@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,16 @@ public class ContentsController {
                        @RequestParam("title") String title,
                        @RequestParam("category") Category category,
                        @RequestParam("desc") String desc) throws Exception {
+
+        // DB에 저장할 파일 경로
         String path = uploader.upload(file, "static");
+
+        // 전송할 데이터 생성
+        String extension = file.getOriginalFilename().split("\\.")[1];
+        String[] pathList = path.split("/");
+        String s3ulr = "s3://sstt/static/" + pathList[4];
+        String filename = pathList[4];
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         Member member = memberService.findSignId(name);
@@ -53,8 +63,6 @@ public class ContentsController {
                         .member(member)
                         .build()).getId();
     }
-
-    
 
     @ApiImplicitParam(name = "X-AUTH-TOKEN")
     @ApiOperation(value = "게시글 목록 전체 조회", notes = "게시글 목록 전체 전달")
