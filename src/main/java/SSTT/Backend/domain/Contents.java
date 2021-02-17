@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -67,4 +68,27 @@ public class Contents {
         summaryList.add(summary);
         summary.setContents(this);
     }
+
+    public static Contents createContents(Member member, Category category, String title, String desc, String filepath, String origin, List<Tag> tags, List<Summary> summaries){
+        Contents contents = new Contents();
+        contents.setMember(member);
+        contents.setCategory(category);
+        contents.setTitle(title);
+        contents.setDesc(desc);
+        contents.setDate(LocalDateTime.now());
+        contents.setFilepath(filepath);
+        contents.setOrigin(origin);
+
+        for (Tag tag : tags) {
+            contents.addTag(tag);
+        }
+
+        for (Summary summary : summaries) {
+            contents.addSummary(summary);
+        }
+
+        return contents;
+    }
+
+
 }

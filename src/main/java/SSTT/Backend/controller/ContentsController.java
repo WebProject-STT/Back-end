@@ -2,7 +2,6 @@ package SSTT.Backend.controller;
 
 import SSTT.Backend.component.S3Uploader;
 import SSTT.Backend.domain.Category;
-import SSTT.Backend.domain.Contents;
 import SSTT.Backend.domain.Member;
 import SSTT.Backend.mapping.ContentsListMapping;
 import SSTT.Backend.mapping.ContentsMapping;
@@ -19,10 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,32 +32,18 @@ public class ContentsController {
     @ApiImplicitParam(name = "X-AUTH-TOKEN")
     @ApiOperation(value = "게시글 등록", notes = "form-data 형태로 전달해야하며, category의 경우 id(pk)로 전달해야 함")
     @PostMapping("/contents")
-    public Long upload(@RequestParam("file") MultipartFile file,
+    public Long uploadTest(@RequestParam("file") MultipartFile file,
                        @RequestParam("title") String title,
                        @RequestParam("category") Category category,
-                       @RequestParam("desc") String desc) throws Exception {
+                       @RequestParam("desc") String desc,
+                           @RequestParam("subject_nums") Integer subjectNum) throws Exception {
 
-        // DB에 저장할 파일 경로
-        String path = uploader.upload(file, "static");
-
-        // 전송할 데이터 생성
-        String extension = file.getOriginalFilename().split("\\.")[1];
-        String[] pathList = path.split("/");
-        String s3ulr = "s3://sstt/static/" + pathList[4];
-        String filename = pathList[4];
-
+        // member 조회
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         Member member = memberService.findSignId(name);
-        return contentsRepository.save(
-                Contents.builder()
-                        .title(title)
-                        .filepath(path)
-                        .date(LocalDateTime.now())
-                        .category(category)
-                        .desc(desc)
-                        .member(member)
-                        .build()).getId();
+
+        return contentsService.createContents(member, file, title, category, desc, subjectNum);
     }
 
     @ApiImplicitParam(name = "X-AUTH-TOKEN")
