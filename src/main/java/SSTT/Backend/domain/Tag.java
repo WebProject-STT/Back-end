@@ -1,5 +1,6 @@
 package SSTT.Backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Tag {
     @Column(name = "tag_id")
     private Long id; // 태그 번호
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ct_id")
     private Contents contents; // 게시글 번호
