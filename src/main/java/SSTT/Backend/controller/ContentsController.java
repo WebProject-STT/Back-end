@@ -1,11 +1,10 @@
 package SSTT.Backend.controller;
 
-import SSTT.Backend.component.S3Uploader;
 import SSTT.Backend.domain.Category;
 import SSTT.Backend.domain.Member;
+import SSTT.Backend.dto.ContentsUpdateDto;
 import SSTT.Backend.mapping.ContentsListMapping;
 import SSTT.Backend.mapping.ContentsMapping;
-import SSTT.Backend.repository.ContentsRepository;
 import SSTT.Backend.service.ContentsService;
 import SSTT.Backend.service.MemberService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,14 +17,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
 public class ContentsController {
 
-    private final S3Uploader uploader;
-    private final ContentsRepository contentsRepository;
     private final MemberService memberService;
     private final ContentsService contentsService;
 
@@ -92,12 +90,31 @@ public class ContentsController {
         return new ResponseEntity<>("contents list delete", HttpStatus.OK);
     }
 
-    /*
-    @ApiOperation(value = "카테고리 삭제", notes = "카테고리 삭제 성공 시 true 반환")
-    @DeleteMapping("/category/{categoryId}")
-    public Boolean delete(@PathVariable("categoryId") Long id) {
-        return categoryService.delete(id);
+    @ApiImplicitParam(name = "X-AUTH-TOKEN")
+    @ApiOperation(value = "게시글 내용 수정", notes = "특정 게시글 내용 수정")
+    @PutMapping("/contents/{contentsId}")
+    public Long update(@PathVariable("contentsId") Long contentsId, @RequestBody @Valid ContentsUpdateDto contentsUpdateDto) {
+
+        // member 조회
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Member member = memberService.findSignId(name);
+
+        return contentsService.updateContents(contentsId, member, contentsUpdateDto);
     }
-     */
+
+    @ApiImplicitParam(name = "X-AUTH-TOKEN")
+    @ApiOperation(value = "게시글 파일 수정", notes = "특정 게시글 파일 수정")
+    @PostMapping("/contents/{contentsId}")
+    public Long updateFile(@PathVariable("contentsId") Long contentsId,
+                           @RequestParam("file") MultipartFile file,
+                           @RequestParam("subject_nums") Integer subjectNum){
+        // member 조회
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Member member = memberService.findSignId(name);
+
+        return contentsService.updateContentsFile(contentsId, member, file, subjectNum);
+    }
     
 }

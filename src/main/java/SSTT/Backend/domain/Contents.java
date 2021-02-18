@@ -69,8 +69,33 @@ public class Contents {
         summary.setContents(this);
     }
 
+
+    // 생성 메서드
     public static Contents createContents(Member member, Category category, String title, String desc, String filepath, String origin, List<Tag> tags, List<Summary> summaries){
         Contents contents = new Contents();
+        contents.setMember(member);
+        contents.setCategory(category);
+        contents.setTitle(title);
+        contents.setDesc(desc);
+        contents.setDate(LocalDateTime.now());
+        contents.setFilepath(filepath);
+        contents.setOrigin(origin);
+
+        for (Tag tag : tags) {
+            contents.addTag(tag);
+        }
+
+        for (Summary summary : summaries) {
+            contents.addSummary(summary);
+        }
+
+        return contents;
+    }
+
+    public static Contents updateContents(Long id, Member member, Category category, String title, String desc, String filepath, String origin, List<Tag> tags, List<Summary> summaries) {
+        Contents contents = new Contents();
+
+        contents.setId(id);
         contents.setMember(member);
         contents.setCategory(category);
         contents.setTitle(title);
