@@ -37,4 +37,9 @@ public class MemberService implements UserDetailsService{
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
     }
 
+    // 회원 번호 조회
+    public Member findById(Long id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
+    }
 }

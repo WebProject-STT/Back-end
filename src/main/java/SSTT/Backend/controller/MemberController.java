@@ -3,6 +3,7 @@ package SSTT.Backend.controller;
 import SSTT.Backend.config.security.JwtTokenProvider;
 import SSTT.Backend.domain.Member;
 import SSTT.Backend.dto.MemberLoginDto;
+import SSTT.Backend.dto.MemberLoginSuccessDto;
 import SSTT.Backend.dto.MemberSignUpDto;
 import SSTT.Backend.repository.MemberRepository;
 import SSTT.Backend.service.MemberService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -22,7 +25,6 @@ import java.util.Collections;
 public class MemberController {
 
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final MemberService memberService;
 
@@ -49,7 +51,7 @@ public class MemberController {
 
     @ApiOperation(value = "로그인", notes = "토큰 반환. 아이디 또는 패스워드 오류 시 false (string) 반환")
     @PostMapping("/user/login")
-    public String login(@RequestBody @Valid MemberLoginDto user) {
+    public Object login(@RequestBody @Valid MemberLoginDto user) {
         Member member;
         try {
             member = memberService.findSignId(user.getSignId());
@@ -59,7 +61,10 @@ public class MemberController {
         } catch (IllegalArgumentException e) {
             return "false";
         }
-        return  jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+//        return  jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+
+        return MemberLoginSuccessDto.builder().id(member.getId()).name(member.getName()).build();
+
     }
 
     @ApiImplicitParam(name = "X-AUTH-TOKEN")
