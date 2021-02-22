@@ -204,11 +204,4 @@ public class ContentsService {
         contentsRepository.deleteById(id);
     }
 
-    @Transactional
-    public void deleteContents(List<Long> ids) {
-        for (Long id : ids) {
-            delete(id);
-        };
-    }
-
 }

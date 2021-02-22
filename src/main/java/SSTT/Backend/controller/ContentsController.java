@@ -115,11 +115,12 @@ public class ContentsController {
     @ApiImplicitParam(name = "memberId")
     @ApiOperation(value = "여러 게시글 삭제", notes = "선택한 여러 게시글 삭제")
     @DeleteMapping("/contents")
-    public Object deleteContents(@RequestParam("deleteList") List<Long> ids, @RequestHeader Long memberId) {
+    public Object deleteContents(@RequestBody Map<String, Object> deleteList, @RequestHeader Long memberId) {
 
         try {
             Member member = memberService.findById(memberId);
-            contentsService.deleteContents(ids);
+            List<Integer> ids = (List<Integer>) deleteList.get("deleteList");
+            for (Integer id : ids) contentsService.delete(Long.valueOf(id));
             return new ResponseEntity<>("contents list delete", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return "false";
