@@ -31,10 +31,16 @@ public class ContentsService {
     private final ContentsRepository contentsRepository;
 
     @Transactional
-    public Long createContents(Member member, MultipartFile file, String title, Category category, String desc, Integer subjectNum) {
+    public Object createContents(Member member, MultipartFile file, String title, Category category, String desc, Integer subjectNum) {
 
         // sstt 처리
-        List ssttResult = sstt(file, subjectNum);
+        List ssttResult = new ArrayList();
+        if(sstt(file, subjectNum) == "false") {
+            return "false";
+        }
+        else {
+            ssttResult = (List) sstt(file, subjectNum);
+        }
 
         String path = (String) ssttResult.get(0);
         String origin = (String) ssttResult.get(1);
@@ -51,7 +57,7 @@ public class ContentsService {
 
     // 파일 업데이트
     @Transactional
-    public Long updateContentsFile(Long id, Member member, MultipartFile file, Integer subjectNum) {
+    public Object updateContentsFile(Long id, Member member, MultipartFile file, Integer subjectNum) {
         //String title, Category category, String desc
 
         // 기존 정보
@@ -70,7 +76,13 @@ public class ContentsService {
         oddContents.get().setSummaryList(null);
 
         // sstt 처리
-        List ssttResult = sstt(file, subjectNum);
+        List ssttResult = new ArrayList();
+        if(sstt(file, subjectNum) == "false") {
+            return "false";
+        }
+        else {
+            ssttResult = (List) sstt(file, subjectNum);
+        }
 
         String path = (String) ssttResult.get(0);
         String origin = (String) ssttResult.get(1);
@@ -123,7 +135,7 @@ public class ContentsService {
 
     // sstt 처리하는 부분
     @SneakyThrows
-    public List sstt(MultipartFile file, Integer subjectNum){
+    public Object sstt(MultipartFile file, Integer subjectNum){
         // DB에 저장할 url
         String path = uploader.upload(file, "static");
 
@@ -138,6 +150,9 @@ public class ContentsService {
 
         // origin
         String origin = (String) params.get("origin");
+
+        if (origin == "false")
+            return "false";
 
         // tag
         List<String> tags = (List<String>) params.get("tagList");
