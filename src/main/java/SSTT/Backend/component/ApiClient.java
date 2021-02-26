@@ -24,7 +24,7 @@ public class ApiClient {
     public Map<String, Object> getApi(String filename, String extension, String s3url, Integer subjectNum) {
 
         String url = "http://34.229.101.96:5000/classifier";
-
+//        String url = "http://localhost:8080/test";
 
         List<String> fileInfo = new ArrayList<>();
         fileInfo.add(filename);
@@ -34,6 +34,11 @@ public class ApiClient {
         Map<String, Object> params = new HashMap<>();
         params.put("file_info", fileInfo);
         params.put("subject_nums", subjectNum);
+
+        System.out.println("==========================");
+        System.out.println(params.get("file_info"));
+        System.out.println(params.get("subject_nums"));
+        System.out.println("==========================");
 
         String body;
 
@@ -49,9 +54,15 @@ public class ApiClient {
 
             HttpEntity entity = new HttpEntity(body, headers);
 
-            ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
+            try {
+                ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
+                return response.getBody();
+            } catch (Exception e){
+                Map<String, Object> error = new HashMap<>();
+                error.put("origin", "change");
+                return error;
+            }
 
-            return response.getBody();
         }
 
         return null;

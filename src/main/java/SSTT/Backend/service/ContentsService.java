@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -34,12 +31,12 @@ public class ContentsService {
     public Object createContents(Member member, MultipartFile file, String title, Category category, String desc, Integer subjectNum) {
 
         // sstt 처리
-        List ssttResult = new ArrayList();
-        if(sstt(file, subjectNum) == "false") {
+        List ssttResult = sstt(file, subjectNum);
+        if(ssttResult.get(0) == "false") {
             return "false";
         }
-        else {
-            ssttResult = (List) sstt(file, subjectNum);
+        else if(ssttResult.get(0) == "change"){
+            return "change";
         }
 
         String path = (String) ssttResult.get(0);
@@ -76,12 +73,12 @@ public class ContentsService {
         oddContents.get().setSummaryList(null);
 
         // sstt 처리
-        List ssttResult = new ArrayList();
-        if(sstt(file, subjectNum) == "false") {
+        List ssttResult = sstt(file, subjectNum);
+        if(ssttResult.get(0) == "false") {
             return "false";
         }
-        else {
-            ssttResult = (List) sstt(file, subjectNum);
+        else if(ssttResult.get(0) == "change"){
+            return "change";
         }
 
         String path = (String) ssttResult.get(0);
@@ -135,12 +132,16 @@ public class ContentsService {
 
     // sstt 처리하는 부분
     @SneakyThrows
-    public Object sstt(MultipartFile file, Integer subjectNum){
+    public List sstt(MultipartFile file, Integer subjectNum){
         // DB에 저장할 url
         String path = uploader.upload(file, "static");
 
+        // 결과를 저장할 리스트
+        List result = new ArrayList();
+
         // 전송할 데이터 생성
-        String extension = file.getOriginalFilename().split("\\.")[1];
+        String[] uploadFile = file.getOriginalFilename().split("\\.");
+        String extension = uploadFile[uploadFile.length - 1];
         String[] pathList = path.split("/");
         String s3ulr = "s3://sstt/static/" + pathList[4];
         String filename = pathList[4];
@@ -151,12 +152,17 @@ public class ContentsService {
         // origin
         String origin = (String) params.get("origin");
 
-        if (origin == "false")
-            return "false";
+        if (origin == "change"){
+            result.add("change");
+            return result;
+        }
+        else if (origin == "false") {
+            result.add("false");
+            return result;
+        }
 
         // tag
         List<String> tags = (List<String>) params.get("tagList");
-
         List<Tag> tagList = new ArrayList<>();
         for (String tag : tags){
             Tag addTag = tagRepository.save(Tag.builder().name(tag).build());
@@ -174,7 +180,7 @@ public class ContentsService {
             summaryList.add(summary);
         }
 
-        List result = new ArrayList();
+
         result.add(path);
         result.add(origin);
         result.add(tagList);
