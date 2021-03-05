@@ -23,7 +23,7 @@ public class ApiClient {
 
     public Map<String, Object> getApi(String filename, String extension, String s3url, Integer subjectNum) {
 
-        String url = "http://34.229.101.96:5000/classifier";
+        String url = "http://54.198.131.176:5000/classifier";
 //        String url = "http://localhost:8080/test";
 
         List<String> fileInfo = new ArrayList<>();
