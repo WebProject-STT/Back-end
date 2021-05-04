@@ -35,6 +35,8 @@
 ## Swagger
 👉 [Swagger 보러가기](https://app.swaggerhub.com/apis/Kim-SuBin/S-STT/1.0.0)
 
+실제 REAT API 문서는 Spring Swagger를 통해 만들었으며 해당 Link는 초기 버전의 API 문서입니다.
+
 ## Design
 👉 [디자인 보러가기](https://www.figma.com/file/iJ6NqMqwOyQqYy4iTFYFTD/S-STT?node-id=0%3A1)
 
